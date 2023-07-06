@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler")
-const User = require('../models/userModel')
+const User = require('../models/userModel');
+const generateToken = require("../utils/generateToken");
 
 
 const signupUser = asyncHandler(async (req, res) => {
@@ -7,7 +8,7 @@ const signupUser = asyncHandler(async (req, res) => {
 
     const userExists = await User.findOne({ email });
 
-    if(userExists){
+    if (userExists) {
         res.status(400);
         throw new Error("User already exists with this email")
     }
@@ -19,17 +20,18 @@ const signupUser = asyncHandler(async (req, res) => {
         pic
     });
 
-    if(user){
+    if (user) {
         res.status(201).json({
-            success:true,
-            message:'Signup successfully!',
-            _id:user._id,
-            name:user.name,
-            email:user.email,
-            isAdmin:user.isAdmin,
-            pic:user.pic
+            success: true,
+            message: 'Signup successfully!',
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            pic: user.pic,
+            token: generateToken(user._id)
         })
-    } else{
+    } else {
         res.status(400);
         throw new Error('Error has occured')
     }
@@ -37,4 +39,28 @@ const signupUser = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { signupUser }
+
+
+const authUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchPassword(password))) {
+        res.json({
+            success: true,
+            message: 'Login successfully!',
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            pic: user.pic,
+            token: generateToken(user._id)
+        })
+    } else {
+        res.status(400);
+        throw new Error('Invalid email or password')
+    }
+});
+
+module.exports = { signupUser, authUser }
