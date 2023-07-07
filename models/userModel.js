@@ -28,9 +28,8 @@ const userSchema = mongoose.Schema(
             default:"https://www.pngmart.com/files/22/User-Avatar-Profile-Download-PNG-Isolated-Image.png"
         },
     },
-    {
-        timeStamps:true,
-    }
+    
+    { timestamps: true }
 );
 
 

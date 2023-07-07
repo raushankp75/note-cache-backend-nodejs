@@ -14,6 +14,7 @@ const { notFound, errorHandler } = require('./middlewares/errorMiddleware')
 
 // IMPORT ROUTES
 const userRoutes = require('./routes/userRoutes')
+const noteRoutes = require('./routes/noteRoutes')
 
 
 
@@ -32,14 +33,15 @@ app.get('/', (req, res) => {
     res.send('Server is running')
 })
 
-app.get('/api/notes', (req, res) => {
-    res.send(notes)
-})
+// app.get('/api/notes', (req, res) => {
+//     res.send(notes)
+// })
 
 
 
 // MIDDLEWARE ROUTES
 app.use('/api/users', userRoutes)
+app.use('/api/notes', noteRoutes)
 
 
 
