@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema(
             required:true,
             default:false
         },
-        image:{
+        pic:{
             type:String,
             required:true,
             default:"https://www.pngmart.com/files/22/User-Avatar-Profile-Download-PNG-Isolated-Image.png"

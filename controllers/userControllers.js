@@ -4,7 +4,7 @@ const generateToken = require("../utils/generateToken");
 
 
 const signupUser = asyncHandler(async (req, res) => {
-    const { name, email, password, image } = req.body;
+    const { name, email, password, pic } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -17,19 +17,18 @@ const signupUser = asyncHandler(async (req, res) => {
         name,
         email,
         password,
-        image
+        pic
     });
 
     if (user) {
         res.status(201).json({
-            success: true,
-            message: 'Signup successfully!',
+            // success: true,
+            // message: 'Signup successfully!',
             _id: user._id,
             name: user.name,
             email: user.email,
-            password:user.password,
             isAdmin: user.isAdmin,
-            image: user.image,
+            pic: user.pic,
             token: generateToken(user._id)
         })
     } else {
@@ -53,7 +52,7 @@ const authUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            image: user.image,
+            pic: user.pic,
             isAdmin: user.isAdmin,
             
         })
