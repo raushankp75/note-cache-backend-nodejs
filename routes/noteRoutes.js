@@ -10,7 +10,7 @@ const { isAuthenticated } = require('../middlewares/authMiddleware');
 
 router.route('/').get(isAuthenticated, getAllNotes)
 router.route('/create').post(isAuthenticated, createNote)
-router.route('/:id').get(isAuthenticated, getSingleNote)
+router.route('/:id').get(getSingleNote)
     .put(isAuthenticated, updateNote)
     .delete(isAuthenticated, deleteNote)
 
